@@ -13,6 +13,7 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author Speakjava (simon.ritter@oracle.com)
@@ -105,6 +106,12 @@ public class Lesson2 {
 	private void exercise5() throws IOException {
 		try (BufferedReader reader = Files.newBufferedReader(Paths.get("SonnetI.txt"), StandardCharsets.UTF_8)) {
 			/* YOUR CODE HERE */
+			List<String> uniqueWords = reader.lines()
+			          .flatMap(line -> Stream.of(line.split(WORD_REGEXP)))
+			          .distinct()
+			          .collect(Collectors.toList());
+
+			      uniqueWords.stream().forEach(System.out::println);
 		}
 	}
 
@@ -116,6 +123,13 @@ public class Lesson2 {
 	private void exercise6() throws IOException {
 		try (BufferedReader reader = Files.newBufferedReader(Paths.get("SonnetI.txt"), StandardCharsets.UTF_8)) {
 			/* YOUR CODE HERE  */
+			List<String> loweredWords = reader.lines()
+			          .flatMap(line -> Stream.of(line.split(WORD_REGEXP)))
+			          .map(String::toLowerCase)
+			          .distinct()
+			          .sorted()
+			          .collect(Collectors.toList());
+			loweredWords.stream().forEach(System.out::println);
 		}
 	}
 
@@ -124,7 +138,13 @@ public class Lesson2 {
 	 */
 	private void exercise7() throws IOException {
 		try (BufferedReader reader = Files.newBufferedReader(Paths.get("SonnetI.txt"), StandardCharsets.UTF_8)) {
-			/* YOUR CODE HERE */
+			List<String> loweredWords = reader.lines()
+			          .flatMap(line -> Stream.of(line.split(WORD_REGEXP)))
+			          .map(String::toLowerCase)
+			          .distinct()
+			          .sorted((x,y) -> x.length() - y.length() )
+			          .collect(Collectors.toList());
+			loweredWords.stream().forEach(System.out::println);
 		}
 	}
 
